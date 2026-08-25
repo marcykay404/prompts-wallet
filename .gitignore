@@ -1,0 +1,8 @@
+/target/
+*.swp
+*.swo
+.DS_Store
+
+# machine-specific cargo/rustc override; do not commit
+/.cargo/
+
