@@ -94,6 +94,37 @@ editor = ["code", "--wait"]
 viewport_lines = 10
 ```
 
+### Using VS Code
+
+VS Code must be launched with `--wait`. Without it, the `code` command returns immediately and `pwt` validates the draft before you have pasted or saved the prompt.
+
+The recommended setup is to add this to the `config.toml` path shown by `pwt paths`:
+
+```toml
+editor = ["code", "--wait"]
+```
+
+Alternatively, configure your shell editor. If your shell currently contains `export EDITOR=code`, replace it with:
+
+```bash
+export EDITOR="code --wait"
+```
+
+Reload the shell configuration after changing it:
+
+```bash
+source ~/.bashrc
+```
+
+When `pwt` opens a VS Code draft:
+
+1. Paste or write the prompt below the closing `+++` frontmatter delimiter.
+2. Save the file.
+3. Close that file's VS Code tab. Saving alone does not release `code --wait`.
+4. Return to the terminal. `pwt` will validate the draft, add or update the prompt, and restore its inline interface.
+
+If `pwt` reports `prompt body cannot be empty`, it resumed before VS Code finished. Your work is retained at the draft path printed in the error. Configure `--wait`, make sure the draft is saved, then either create the prompt again using the retained content or move the valid `.md` draft into the prompts directory shown by `pwt paths`. Closing the editor after the error will not import the draft automatically because that `pwt` process has already resumed.
+
 ## Prompt format
 
 Prompts are Markdown with TOML frontmatter:
